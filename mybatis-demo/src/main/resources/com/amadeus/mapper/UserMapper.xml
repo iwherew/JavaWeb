@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+namespace:名称空间
+-->
+<mapper namespace="com.amadeus.mapper.UserMapper">
+<!--    <select id="selectAll" resultType="com.amadeus.pojo.User">-->
+<!--    typeAliases 配置别名-->
+    <select id="selectAll" resultType="User">
+        select * from tb_user;
+    </select>
+<!--
+    参数占位符：
+        1、#{}: 会将其替换为? , 为了防止sql注入
+        2、${}: 拼sql。会存在sql注入问题
+        3、使用时机：
+            传递传入的时候： #{}
+            表名或列名不固定的情况下: ${} , 会存在sql注入问题
+
+    特殊字符处理：
+        1、转义字符 < 转为 &lt;
+        2、CDATA区
+
+-->
+    <select id="selectById" resultType="com.amadeus.pojo.User">
+        select * from tb_user where id = #{id};
+    </select>
+
+<!--    CDATA区-->
+<!--    <select id="selectById" resultType="com.amadeus.pojo.User">-->
+<!--        select * from tb_user where id-->
+<!--         <![CDATA[-->
+<!--         <-->
+<!--         ]]>-->
+<!--        #{id};-->
+<!--    </select>-->
+</mapper>
