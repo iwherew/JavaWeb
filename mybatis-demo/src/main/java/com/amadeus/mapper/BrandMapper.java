@@ -2,6 +2,7 @@ package com.amadeus.mapper;
 
 import com.amadeus.pojo.Brand;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +24,27 @@ public interface BrandMapper {
 
     // 单条件动态查询
     List<Brand> selectByConditionSingle(Brand brand);
+
+    // 添加
+    void add(Brand brand);
+
+    // 全量修改
+    void fullUpdate(Brand brand);
+
+    // 动态修改字段
+    void update(Brand brand);
+
+    // 单个删除
+    void deleteById(int id);
+
+    // 批量删除
+    void deleteByIds(@Param("ids") int[] ids);
+
+    // 注解写简单sql
+    // 查询 @Select
+    // 添加 @Insert
+    // 修改 @Update
+    // 删除 @Delete
+    @Select("select * from tb_brand where id = #{id}")
+    Brand selectByIdThroughAnnotate(int id);
 }

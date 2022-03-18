@@ -109,4 +109,93 @@ namespace:名称空间
             </choose>
         </where>
     </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand (brand_name, company_name, ordered, description, status)
+        values (#{brandName},#{companyName},#{ordered},#{description},#{status});
+    </insert>
+
+<!--    全量修改-->
+    <update id="fullUpdate">
+        update tb_brand
+        set
+            brand_name = #{brandName},
+            company_name = #{companyName},
+            ordered = #{ordered},
+            description = #{description},
+            status = #{status}
+        where id = #{id};
+    </update>
+
+<!--    动态修改 使用set if-->
+    <update id="update">
+        update tb_brand
+        <set>
+            <if test="brandName != null and brandName != ''">
+                brand_name = #{brandName},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName},
+            </if>
+            <if test="ordered != null">
+                ordered = #{ordered},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="status != null ">
+                status = #{status},
+            </if>
+        </set>
+            where id = #{id}
+    </update>
+
+    <!-- 删除单条数据 -->
+    <delete id="deleteById">
+        delete from tb_brand where id = #{id};
+    </delete>
+
+    <!-- 批量删除 -->
+<!--
+    mybatis会将数组参数，封装成一个Map集合。
+        * 默认： array = 数组
+        * 使用@Params注解改变map集合的默认key的名称
+        * separator: item的分隔符
+        * open: 前添加
+        * close: 后添加
+-->
+    <delete id="deleteByIds">
+        delete from tb_brand where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>;
+    </delete>
+
+<!--
+      mybatis 参数封装：
+        *单个参数：
+            1、POJO类型：直接使用，属性名 和 参数占位符名称 一致
+            2、Map集合：直接使用，键名 和 参数占位符名称 一致
+            3、Collection：封装为Map集合
+                map.put("arg0",collection集合)
+                map.put("collection",collection集合)
+            4、List：封装为Map集合
+                map.put("arg0",list集合)
+                map.put("collection",list集合)
+                map.put("list",list集合)
+            5、Array：封装为Map集合
+                map.put("arg0",数组)
+                map.put("array",数组)
+            6、其他类型：直接使用
+        *多个参数
+            map.put("arg0",参数值1)
+            map.put("param1",参数值1)
+            map.put("arg1",参数值2)
+            map.put("param2",参数值2)
+            ____________@Param("username")
+            map.put("username",参数值1)
+            map.put("param1",参数值1)
+            map.put("arg1",参数值2)
+            map.put("param2",参数值2)
+-->
 </mapper>
