@@ -1,4 +1,4 @@
-package com.amadeus.web;
+package com.amadeus.web.cookie;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

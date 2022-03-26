@@ -4,8 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <session-config>
-<!--  session失效时间，默认30分钟，单位：分钟  -->
-    <session-timeout>100</session-timeout>
-  </session-config>
 </web-app>
